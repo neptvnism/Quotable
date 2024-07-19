@@ -2,38 +2,55 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var viewModel = QuoteViewModel()
+    @State private var showAlert = false
+    @State private var showAddedMessage = false
     
     var body: some View {
         TabView {
             VStack {
-                Spacer()  // Push the content up
-                
                 VStack {
                     Text(viewModel.quoteOfTheDay.text)
                         .font(.headline)
                         .multilineTextAlignment(.center)
                         .padding()
+                        .onTapGesture(count: 2) {
+                            showAlert = true
+                        }
                     Text("- \(viewModel.quoteOfTheDay.author)")
                         .font(.subheadline)
                         .multilineTextAlignment(.center)
                         .padding([.leading, .trailing, .bottom])
+                        .onTapGesture(count: 2) {
+                            showAlert = true
+                        }
                 }
-                .padding(.bottom, 50)  // Add space for the button
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Add to Favorites"),
+                        message: Text("Would you like to add this quote to your favorites?"),
+                        primaryButton: .default(Text("Yes")) {
+                            viewModel.toggleFavorite()
+                            showAddedMessage = true
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
+                .padding(.bottom, 50)  // Add space for the message
                 
-                HStack {
-                    Spacer()  // Push the button to the right
-                    
-                    Button(action: {
-                        viewModel.toggleFavorite()
-                    }) {
-                        Image(systemName: viewModel.favoritedQuotes.contains(where: { $0.id == viewModel.quoteOfTheDay.id }) ? "star.fill" : "star")
-                            .foregroundColor(viewModel.favoritedQuotes.contains(where: { $0.id == viewModel.quoteOfTheDay.id }) ? .yellow : .gray)
-                            .font(.system(size: 18))  // Smaller size for the button
+                if showAddedMessage {
+                    HStack {
+                        Image(systemName: "star.fill")
+                            .foregroundColor(.yellow)
+                            .font(.system(size: 18))
+                        Text("Added to favorites")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
                     }
-                    .padding(8)  // Small padding around the button
+                    .transition(.opacity)
+                    .padding(.bottom, 16)
                 }
-                .padding(.bottom, 16)  // Additional padding from the bottom
             }
+            .padding()  // Ensure padding around the content
             .tabItem {
                 Label("Quotes", systemImage: "quote.bubble")
             }
@@ -45,3 +62,4 @@ struct ContentView: View {
         }
     }
 }
+
