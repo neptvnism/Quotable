@@ -18,6 +18,7 @@
 		5928A00A2C4A70A9003EF001 /* QuoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5928A0092C4A70A9003EF001 /* QuoteViewModel.swift */; };
 		5928A00C2C4A70CC003EF001 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5928A00B2C4A70CC003EF001 /* Quote.swift */; };
 		59326FB82C4A861600F748F1 /* FavoritedQuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59326FB72C4A861600F748F1 /* FavoritedQuotesView.swift */; };
+		598233922C4B1EDB009B8A0F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598233912C4B1EDB009B8A0F /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		5928A0092C4A70A9003EF001 /* QuoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteViewModel.swift; sourceTree = "<group>"; };
 		5928A00B2C4A70CC003EF001 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		59326FB72C4A861600F748F1 /* FavoritedQuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritedQuotesView.swift; sourceTree = "<group>"; };
+		598233912C4B1EDB009B8A0F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 				5928A0092C4A70A9003EF001 /* QuoteViewModel.swift */,
 				5928A00B2C4A70CC003EF001 /* Quote.swift */,
 				59326FB72C4A861600F748F1 /* FavoritedQuotesView.swift */,
+				598233912C4B1EDB009B8A0F /* SettingsView.swift */,
 			);
 			path = "Quotable Watch App";
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				5928A00C2C4A70CC003EF001 /* Quote.swift in Sources */,
 				59326FB82C4A861600F748F1 /* FavoritedQuotesView.swift in Sources */,
 				5928A00A2C4A70A9003EF001 /* QuoteViewModel.swift in Sources */,
+				598233922C4B1EDB009B8A0F /* SettingsView.swift in Sources */,
 				59289FDE2C4A6B65003EF001 /* ContentView.swift in Sources */,
 				59289FDC2C4A6B65003EF001 /* QuotableApp.swift in Sources */,
 			);

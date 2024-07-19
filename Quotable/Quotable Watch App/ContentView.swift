@@ -4,9 +4,10 @@ struct ContentView: View {
     @ObservedObject var viewModel = QuoteViewModel()
     @State private var showAlert = false
     @State private var showAddedMessage = false
+    @State private var selectedTab = 0
     
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             VStack {
                 VStack {
                     Text(viewModel.quoteOfTheDay.text)
@@ -57,11 +58,27 @@ struct ContentView: View {
             .tabItem {
                 Label("Quotes", systemImage: "quote.bubble")
             }
+            .tag(0)
+            .gesture(DragGesture()
+                        .onEnded { value in
+                            if value.translation.width < -100 {
+                                withAnimation {
+                                    selectedTab = 2  // Switch to Settings tab
+                                }
+                            }
+                        })
 
             FavoritedQuotesView(viewModel: viewModel)
                 .tabItem {
                     Label("Favorites", systemImage: "star")
                 }
+                .tag(1)
+
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
+                }
+                .tag(2)
         }
     }
 }
