@@ -31,6 +31,9 @@ struct ContentView: View {
                         primaryButton: .default(Text("Yes")) {
                             viewModel.toggleFavorite()
                             showAddedMessage = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                showAddedMessage = false
+                            }
                         },
                         secondaryButton: .cancel()
                     )
@@ -62,4 +65,3 @@ struct ContentView: View {
         }
     }
 }
-

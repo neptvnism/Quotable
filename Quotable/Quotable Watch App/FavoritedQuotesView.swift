@@ -31,4 +31,3 @@ struct FavoritedQuotesView: View {
         }
     }
 }
-
