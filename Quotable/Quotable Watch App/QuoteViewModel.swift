@@ -4,6 +4,15 @@ class QuoteViewModel: ObservableObject {
     @Published var quoteOfTheDay: Quote
     @Published var favoritedQuotes: [Quote] = []
 
+    var fontName: String {
+        get { UserDefaults.standard.string(forKey: "fontName") ?? "Arial" }
+        set { UserDefaults.standard.set(newValue, forKey: "fontName") }
+    }
+    var fontSize: Double {
+        get { UserDefaults.standard.double(forKey: "fontSize") }
+        set { UserDefaults.standard.set(newValue, forKey: "fontSize") }
+    }
+
     private let quotes: [Quote] = [
         Quote(text: "The only limit to our realization of tomorrow is our doubts of today.", author: "Franklin D. Roosevelt"),
         Quote(text: "Do not wait to strike till the iron is hot; but make it hot by striking.", author: "William Butler Yeats"),
@@ -258,42 +267,42 @@ class QuoteViewModel: ObservableObject {
     
     private let favoritedQuotesKey = "favoritedQuotes"
 
-        init() {
-            self.quoteOfTheDay = quotes.randomElement() ?? Quote(text: "No quote available", author: "Unknown")
-            loadFavoritedQuotes()
+    init() {
+        self.quoteOfTheDay = quotes.randomElement() ?? Quote(text: "No quote available", author: "Unknown")
+        loadFavoritedQuotes()
+    }
+    
+    func updateQuoteOfTheDay() {
+        self.quoteOfTheDay = quotes.randomElement() ?? Quote(text: "No quote available", author: "Unknown")
+    }
+    
+    func toggleFavorite() {
+        if let index = favoritedQuotes.firstIndex(where: { $0.id == quoteOfTheDay.id }) {
+            favoritedQuotes.remove(at: index)
+        } else {
+            favoritedQuotes.append(quoteOfTheDay)
         }
-        
-        func updateQuoteOfTheDay() {
-            self.quoteOfTheDay = quotes.randomElement() ?? Quote(text: "No quote available", author: "Unknown")
+        saveFavoritedQuotes()
+    }
+    
+    func resetFavorites() {
+        favoritedQuotes.removeAll()
+        saveFavoritedQuotes()
+    }
+    
+    private func saveFavoritedQuotes() {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(favoritedQuotes) {
+            UserDefaults.standard.set(encoded, forKey: favoritedQuotesKey)
         }
-        
-        func toggleFavorite() {
-            if let index = favoritedQuotes.firstIndex(where: { $0.id == quoteOfTheDay.id }) {
-                favoritedQuotes.remove(at: index)
-            } else {
-                favoritedQuotes.append(quoteOfTheDay)
-            }
-            saveFavoritedQuotes()
-        }
-        
-        func resetFavorites() {
-            favoritedQuotes.removeAll()
-            saveFavoritedQuotes()
-        }
-        
-        private func saveFavoritedQuotes() {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(favoritedQuotes) {
-                UserDefaults.standard.set(encoded, forKey: favoritedQuotesKey)
-            }
-        }
-        
-        private func loadFavoritedQuotes() {
-            if let savedData = UserDefaults.standard.data(forKey: favoritedQuotesKey) {
-                let decoder = JSONDecoder()
-                if let loadedQuotes = try? decoder.decode([Quote].self, from: savedData) {
-                    favoritedQuotes = loadedQuotes
-                }
+    }
+    
+    private func loadFavoritedQuotes() {
+        if let savedData = UserDefaults.standard.data(forKey: favoritedQuotesKey) {
+            let decoder = JSONDecoder()
+            if let loadedQuotes = try? decoder.decode([Quote].self, from: savedData) {
+                favoritedQuotes = loadedQuotes
             }
         }
     }
+}

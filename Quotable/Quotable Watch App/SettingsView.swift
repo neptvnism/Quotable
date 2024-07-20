@@ -25,6 +25,15 @@ enum Theme: String, CaseIterable, Identifiable {
             return Color(red: 244/255, green: 236/255, blue: 215/255)
         }
     }
+    
+    var textColor: Color {
+        switch self {
+        case .light, .sepia:
+            return Color.black
+        case .dark:
+            return Color.white
+        }
+    }
 }
 
 struct SettingsView: View {
@@ -68,7 +77,10 @@ struct SettingsView: View {
                 }
             }
             .navigationBarTitle("Settings")
+            .background(theme.backgroundColor.edgesIgnoringSafeArea(.all))
+            .foregroundColor(theme.textColor)
         }
+        .preferredColorScheme(theme.colorScheme)
     }
 }
 

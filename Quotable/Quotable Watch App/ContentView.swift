@@ -15,15 +15,15 @@ struct ContentView: View {
                 VStack {
                     Text(viewModel.quoteOfTheDay.text)
                         .font(.custom(fontName, size: CGFloat(fontSize)))
+                        .foregroundColor(theme.textColor)
                         .multilineTextAlignment(.center)
-                        .padding()
                         .onTapGesture(count: 2) {
                             showAlert = true
                         }
                     Text("- \(viewModel.quoteOfTheDay.author)")
                         .font(.custom(fontName, size: CGFloat(fontSize) * 0.8))
+                        .foregroundColor(theme.textColor)
                         .multilineTextAlignment(.center)
-                        .padding([.leading, .trailing, .bottom])
                         .onTapGesture(count: 2) {
                             showAlert = true
                         }
@@ -42,7 +42,6 @@ struct ContentView: View {
                         secondaryButton: .cancel()
                     )
                 }
-                .padding(.bottom, 50)  // Add space for the message
                 
                 if showAddedMessage {
                     HStack {
@@ -57,7 +56,8 @@ struct ContentView: View {
                     .padding(.bottom, 16)
                 }
             }
-            .padding()  // Ensure padding around the content
+            .padding(.horizontal)  // Minimize padding around the content
+            .background(theme.backgroundColor.edgesIgnoringSafeArea(.all))
             .tabItem {
                 Label("Quotes", systemImage: "quote.bubble")
             }
@@ -70,19 +70,20 @@ struct ContentView: View {
                                 }
                             }
                         })
-            .background(theme.backgroundColor.edgesIgnoringSafeArea(.all))
 
             FavoritedQuotesView(viewModel: viewModel)
                 .tabItem {
                     Label("Favorites", systemImage: "star")
                 }
                 .tag(1)
+                .background(theme.backgroundColor.edgesIgnoringSafeArea(.all))
 
             SettingsView(viewModel: viewModel)
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
                 .tag(2)
+                .background(theme.backgroundColor.edgesIgnoringSafeArea(.all))
         }
         .preferredColorScheme(theme.colorScheme)
     }
