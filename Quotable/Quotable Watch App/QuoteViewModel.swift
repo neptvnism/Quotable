@@ -261,7 +261,6 @@ class QuoteViewModel: ObservableObject {
         init() {
             self.quoteOfTheDay = quotes.randomElement() ?? Quote(text: "No quote available", author: "Unknown")
             loadFavoritedQuotes()
-            self.updateQuoteOfTheDay()
         }
         
         func updateQuoteOfTheDay() {
@@ -274,6 +273,11 @@ class QuoteViewModel: ObservableObject {
             } else {
                 favoritedQuotes.append(quoteOfTheDay)
             }
+            saveFavoritedQuotes()
+        }
+        
+        func resetFavorites() {
+            favoritedQuotes.removeAll()
             saveFavoritedQuotes()
         }
         

@@ -5,6 +5,7 @@ struct ContentView: View {
     @State private var showAlert = false
     @State private var showAddedMessage = false
     @State private var selectedTab = 0
+    @AppStorage("theme") private var theme: Theme = .light
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -74,11 +75,12 @@ struct ContentView: View {
                 }
                 .tag(1)
 
-            SettingsView()
+            SettingsView(viewModel: viewModel)
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
                 .tag(2)
         }
+        .preferredColorScheme(theme.colorScheme)
     }
 }
