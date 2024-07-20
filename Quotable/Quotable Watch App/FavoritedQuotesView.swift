@@ -2,7 +2,7 @@ import SwiftUI
 
 struct FavoritedQuotesView: View {
     @ObservedObject var viewModel: QuoteViewModel
-    @AppStorage("theme") private var theme: Theme = .light
+    var theme: Theme
     
     var body: some View {
         List {
@@ -25,7 +25,7 @@ struct FavoritedQuotesView: View {
                         }
                     }) {
                         Image(systemName: "xmark.circle")
-                            .foregroundColor(.gray)
+                            .foregroundColor(theme.textColor)
                             .font(.system(size: 18))
                     }
                 }

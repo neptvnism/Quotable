@@ -267,42 +267,42 @@ class QuoteViewModel: ObservableObject {
     
     private let favoritedQuotesKey = "favoritedQuotes"
 
-    init() {
-        self.quoteOfTheDay = quotes.randomElement() ?? Quote(text: "No quote available", author: "Unknown")
-        loadFavoritedQuotes()
-    }
-    
-    func updateQuoteOfTheDay() {
-        self.quoteOfTheDay = quotes.randomElement() ?? Quote(text: "No quote available", author: "Unknown")
-    }
-    
-    func toggleFavorite() {
-        if let index = favoritedQuotes.firstIndex(where: { $0.id == quoteOfTheDay.id }) {
-            favoritedQuotes.remove(at: index)
-        } else {
-            favoritedQuotes.append(quoteOfTheDay)
+        init() {
+            self.quoteOfTheDay = quotes.randomElement() ?? Quote(text: "No quote available", author: "Unknown")
+            loadFavoritedQuotes()
         }
-        saveFavoritedQuotes()
-    }
-    
-    func resetFavorites() {
-        favoritedQuotes.removeAll()
-        saveFavoritedQuotes()
-    }
-    
-    private func saveFavoritedQuotes() {
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(favoritedQuotes) {
-            UserDefaults.standard.set(encoded, forKey: favoritedQuotesKey)
+        
+        func updateQuoteOfTheDay() {
+            self.quoteOfTheDay = quotes.randomElement() ?? Quote(text: "No quote available", author: "Unknown")
         }
-    }
-    
-    private func loadFavoritedQuotes() {
-        if let savedData = UserDefaults.standard.data(forKey: favoritedQuotesKey) {
-            let decoder = JSONDecoder()
-            if let loadedQuotes = try? decoder.decode([Quote].self, from: savedData) {
-                favoritedQuotes = loadedQuotes
+        
+        func toggleFavorite() {
+            if let index = favoritedQuotes.firstIndex(where: { $0.id == quoteOfTheDay.id }) {
+                favoritedQuotes.remove(at: index)
+            } else {
+                favoritedQuotes.append(quoteOfTheDay)
+            }
+            saveFavoritedQuotes()
+        }
+        
+        func resetFavorites() {
+            favoritedQuotes.removeAll()
+            saveFavoritedQuotes()
+        }
+        
+        private func saveFavoritedQuotes() {
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(favoritedQuotes) {
+                UserDefaults.standard.set(encoded, forKey: favoritedQuotesKey)
+            }
+        }
+        
+        private func loadFavoritedQuotes() {
+            if let savedData = UserDefaults.standard.data(forKey: favoritedQuotesKey) {
+                let decoder = JSONDecoder()
+                if let loadedQuotes = try? decoder.decode([Quote].self, from: savedData) {
+                    favoritedQuotes = loadedQuotes
+                }
             }
         }
     }
-}
