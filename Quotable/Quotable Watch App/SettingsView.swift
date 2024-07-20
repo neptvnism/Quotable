@@ -49,6 +49,7 @@ struct SettingsView: View {
                             Text(font).tag(font)
                         }
                     }
+                    .pickerStyle(WheelPickerStyle())
                     
                     HStack {
                         Text("Font Size")

@@ -6,20 +6,22 @@ struct ContentView: View {
     @State private var showAddedMessage = false
     @State private var selectedTab = 0
     @AppStorage("theme") private var theme: Theme = .light
+    @AppStorage("fontName") private var fontName: String = "Arial"
+    @AppStorage("fontSize") private var fontSize: Double = 16.0
     
     var body: some View {
         TabView(selection: $selectedTab) {
             VStack {
                 VStack {
                     Text(viewModel.quoteOfTheDay.text)
-                        .font(.headline)
+                        .font(.custom(fontName, size: CGFloat(fontSize)))
                         .multilineTextAlignment(.center)
                         .padding()
                         .onTapGesture(count: 2) {
                             showAlert = true
                         }
                     Text("- \(viewModel.quoteOfTheDay.author)")
-                        .font(.subheadline)
+                        .font(.custom(fontName, size: CGFloat(fontSize) * 0.8))
                         .multilineTextAlignment(.center)
                         .padding([.leading, .trailing, .bottom])
                         .onTapGesture(count: 2) {
@@ -68,6 +70,7 @@ struct ContentView: View {
                                 }
                             }
                         })
+            .background(theme.backgroundColor.edgesIgnoringSafeArea(.all))
 
             FavoritedQuotesView(viewModel: viewModel)
                 .tabItem {
